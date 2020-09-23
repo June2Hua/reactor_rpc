@@ -4,6 +4,8 @@ import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +19,8 @@ public class SerializationUtil {
 
     private static final Map<Class<?>, Schema<?>> cache = new ConcurrentHashMap<>();
 
+    private static final Objenesis objenesis = new ObjenesisStd(true);
+
     private SerializationUtil() {}
 
     public static <T> byte[] serialize(T obj) {
@@ -29,6 +33,17 @@ public class SerializationUtil {
             throw new IllegalArgumentException("序列化错误");
         } finally {
             linkedBuffer.clear();
+        }
+    }
+
+    public static<T> T deserialize(byte[] bytes, Class<T> clazz) {
+        try {
+            T instance = objenesis.newInstance(clazz);
+            Schema<T> schema = getSchemaFromCache(clazz);
+            ProtostuffIOUtil.mergeFrom(bytes, instance, schema);
+            return instance;
+        } catch (Exception exception) {
+            throw new IllegalStateException("反序列化错误");
         }
     }
 
