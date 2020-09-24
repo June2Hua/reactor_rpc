@@ -12,6 +12,10 @@
     <artifactId>rpc-common</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
