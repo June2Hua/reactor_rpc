@@ -11,6 +11,7 @@
         <module name="rpccommon" />
         <module name="rpcregistry" />
         <module name="rpcregistryzookeeper" />
+        <module name="rpcserver" />
       </profile>
     </annotationProcessing>
   </component>

@@ -12,6 +12,7 @@
         <module>rpc-registry</module>
         <module>rpc-registry-zookeeper</module>
         <module>rpc-client</module>
+        <module>rpc-server</module>
     </modules>
     <packaging>pom</packaging>
 
