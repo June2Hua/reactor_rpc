@@ -75,6 +75,7 @@ public class RpcServer  implements ApplicationContextAware, InitializingBean {
             if (serviceRegistry != null) {
                 for (String serverName : serverName2ServerObject.keySet()) {
                     serviceRegistry.register(serverName, serviceAddress);
+                    log.info("RpcServer.afterPropertiesSet 服务名：{} 服务地址:{}", serverName, serviceAddress);
                 }
             }
             channelFuture.channel().closeFuture().sync();
