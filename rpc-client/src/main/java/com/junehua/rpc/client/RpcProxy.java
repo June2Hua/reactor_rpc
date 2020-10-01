@@ -54,15 +54,17 @@ public class RpcProxy {
                         request.setArgs(args);
                         request.setServiceVersion(serverVersion);
                         //rpc服务
+                        String serverName = null;
                         if (discovery != null) {
-                            String serverName = interfaceClass.getName();
+                            serverName = interfaceClass.getName();
                             if (serverVersion != null && serverVersion.length() != 0) {
-                                serverName += "-" +serverVersion;
+                                serverName += "-" + serverVersion;
                             }
                             String address = discovery.discovery(serverName);
                             log.info("InvocationHandler.invoke serverName:{} , address", serverName, address);
                         }
                         if (serverAddress == null || serverAddress.length() == 0) {
+                            log.warn("RpcProxy.create  zookeeper中找不到该类服务 serverName:{}",serverName);
                             throw new RuntimeException("InvocationHandler.invoke 地址为空");
                         }
                         String[] hostAndPort = serverAddress.split(":");

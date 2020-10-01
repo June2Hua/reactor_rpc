@@ -28,6 +28,7 @@ public class ZooKeeperServiceDiscovery implements ServiceDiscovery {
 
     @Override
     public String discovery(String serverName) {
+        log.info("ZooKeeperServiceDiscovery.discovery  serverName:{}", serverName);
         try {
             String nodePath = ZookeeperServiceRegistry.ZK_REGISTRY_PATH + "/" + serverName;
             if (!client.exists(nodePath)) {

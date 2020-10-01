@@ -20,17 +20,18 @@ public class ZookeeperServiceRegistry implements ServiceRegistry {
 
     private final ZkClient client;//zookeeper客户端
 
-    private static final int SESSION_TIMEOUT = 5000;
+    private static final int SESSION_TIMEOUT = 50000;
 
-    private static final int CONNETION_TIMEOUT = 1000;
+    private static final int CONNETION_TIMEOUT = 10000;
 
     public static final String ZK_REGISTRY_PATH = "/registry";
 
     private static final String LEAF_PREFIX = "/address-";
 
     public ZookeeperServiceRegistry(String serverAddress) {
+        log.info("ZookeeperServiceRegistry.construct start ... serverAddress", serverAddress);
         this.client = new ZkClient(serverAddress, SESSION_TIMEOUT, CONNETION_TIMEOUT);
-        client.createPersistent(ZK_REGISTRY_PATH);
+//        client.createPersistent(ZK_REGISTRY_PATH);
         log.info("ZookeeperServiceRegistry.ZookeeperServiceRegistry connect serverAddress:{}", serverAddress);
     }
 

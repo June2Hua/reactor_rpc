@@ -42,10 +42,12 @@ public class RpcServer  implements ApplicationContextAware, InitializingBean {
     public RpcServer(String serviceAddress, ServiceRegistry serviceRegistry) {
         this.serviceAddress = serviceAddress;
         this.serviceRegistry = serviceRegistry;
+        log.info("RpcServer.construct start ...");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        log.info("RpcServer.afterPropertiesSet");
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
         try {
@@ -84,6 +86,7 @@ public class RpcServer  implements ApplicationContextAware, InitializingBean {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        log.info("RpcServer.setApplicationContext start ...");
         //扫描自定义注解类
         Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(RpcServiceAnnotation.class);
         if (beansWithAnnotation != null && beansWithAnnotation.size() != 0) {
@@ -94,6 +97,7 @@ public class RpcServer  implements ApplicationContextAware, InitializingBean {
                 if (StringUtils.isNotEmpty(serverVersion)) {
                     serverName += "-" + serverVersion;
                 }
+                log.info("RpcServer.setApplicationContext serverName:{}  objectBean:{}", serverName, objectBean);
                 serverName2ServerObject.put(serverName, objectBean);
             }
         }

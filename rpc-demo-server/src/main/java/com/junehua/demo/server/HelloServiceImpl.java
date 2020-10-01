@@ -15,6 +15,10 @@ public class HelloServiceImpl implements Helloservice {
 
     private static final Logger log = LoggerFactory.getLogger(HelloServiceImpl.class);
 
+    public HelloServiceImpl() {
+        log.info("HelloServiceImpl.con");
+    }
+
     @Override
     public String hello(String name) {
         log.info("HelloServiceImpl.hello name:{}", name);
