@@ -9,6 +9,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="rpcclient" />
         <module name="rpccommon" />
+        <module name="rpcdemoapi" />
+        <module name="rpcdemoclient" />
+        <module name="rpcdemoserver" />
         <module name="rpcregistry" />
         <module name="rpcregistryzookeeper" />
         <module name="rpcserver" />
