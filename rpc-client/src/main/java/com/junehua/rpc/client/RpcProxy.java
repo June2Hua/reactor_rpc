@@ -46,6 +46,7 @@ public class RpcProxy {
                 new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        log.info("RpcProxy.create proxy:{} method:{} args:{}", proxy, method, args);
                         RpcRequest request = new RpcRequest();
                         request.setRequestId(UUID.randomUUID().toString());
                         request.setClassName(method.getDeclaringClass().getName());
@@ -55,16 +56,15 @@ public class RpcProxy {
                         request.setServiceVersion(serverVersion);
                         //rpc服务
                         String serverName = null;
-                        String address = null;
                         if (discovery != null) {
                             serverName = interfaceClass.getName();
                             if (serverVersion != null && serverVersion.length() != 0) {
                                 serverName += "-" + serverVersion;
                             }
-                            address = discovery.discovery(serverName);
-                            log.info("InvocationHandler.invoke serverName:{} , address", serverName, address);
+                            serverAddress = discovery.discovery(serverName);
+                            log.info("InvocationHandler.invoke serverName:{} , address", serverName, serverAddress);
                         }
-                        if (address == null || address.length() == 0) {
+                        if (serverAddress == null || serverAddress.length() == 0) {
                             log.warn("RpcProxy.create  zookeeper中找不到该类服务 serverName:{}",serverName);
                             throw new RuntimeException("InvocationHandler.invoke 地址为空");
                         }

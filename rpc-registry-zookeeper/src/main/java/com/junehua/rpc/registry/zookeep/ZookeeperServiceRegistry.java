@@ -31,7 +31,10 @@ public class ZookeeperServiceRegistry implements ServiceRegistry {
     public ZookeeperServiceRegistry(String serverAddress) {
         log.info("ZookeeperServiceRegistry.construct start ... serverAddress", serverAddress);
         this.client = new ZkClient(serverAddress, SESSION_TIMEOUT, CONNETION_TIMEOUT);
-//        client.createPersistent(ZK_REGISTRY_PATH);
+        if (!client.exists(ZK_REGISTRY_PATH)) {
+            log.info("ZookeeperServiceRegistry.construct start ...  客户端创建/registry ");
+            client.createPersistent(ZK_REGISTRY_PATH);
+        }
         log.info("ZookeeperServiceRegistry.ZookeeperServiceRegistry connect serverAddress:{}", serverAddress);
     }
 
