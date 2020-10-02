@@ -1,6 +1,6 @@
 package com.junehua.rpc.demo.client;
 
-import com.junehua.demo.service.Helloservice;
+import com.junehua.demo.service.HelloService;
 import com.junehua.rpc.client.RpcProxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,8 +15,8 @@ public class HelloConsumer {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
         RpcProxy rpcProxy = applicationContext.getBean("rpcProxy", RpcProxy.class);
-        Helloservice helloservice = rpcProxy.create(Helloservice.class);
-        String result = helloservice.hello("test");
+        HelloService helloService = rpcProxy.create(HelloService.class);
+        String result = helloService.hello("test");
         System.out.println(result);
     }
 }

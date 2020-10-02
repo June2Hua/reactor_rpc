@@ -31,10 +31,12 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
     public RpcClient(String host, int port) {
         this.host = host;
         this.port = port;
+        log.debug("RpcClient construct ...");
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception {
+        log.debug("RpcClient.channelRead0 channelHandlerContext:{} rpcResponse:{}", channelHandlerContext, rpcResponse);
         this.response = rpcResponse;
     }
 
@@ -63,6 +65,7 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
             //连接服务器
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
             Channel channel = channelFuture.channel();
+            log.debug("RpcClient.send request:{}", request);
             channel.writeAndFlush(request).sync();
             channel.closeFuture().sync();
             return response;

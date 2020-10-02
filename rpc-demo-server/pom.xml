@@ -56,8 +56,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
-                            <mainClass>com.xxx.rpc.sample.server.RpcBootstrap</mainClass>
-                            <mainClass>com.junehua.</mainClass>
+                            <mainClass>com.junehua.rpc.demo.client.HelloConsumer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

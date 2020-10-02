@@ -1,6 +1,6 @@
 package com.junehua.demo.server;
 
-import com.junehua.demo.service.Helloservice;
+import com.junehua.demo.service.HelloService;
 import com.junehua.rpc.server.RpcServiceAnnotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * @Date 2020/9/30 23:35
  * @Version 1.0
  */
-@RpcServiceAnnotation(value = Helloservice.class)
-public class HelloServiceImpl implements Helloservice {
+@RpcServiceAnnotation(value = HelloService.class)
+public class HelloServiceImpl implements HelloService {
 
     private static final Logger log = LoggerFactory.getLogger(HelloServiceImpl.class);
 

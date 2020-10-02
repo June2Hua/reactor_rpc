@@ -35,7 +35,7 @@ public class RpcProxy {
         this.discovery = discovery;
     }
 
-    public <T> T create(Class<?> interfaceClass) {
+    public <T> T create(final Class<?> interfaceClass) {
         return create(interfaceClass, "");
     }
 
@@ -46,7 +46,6 @@ public class RpcProxy {
                 new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        log.info("RpcProxy.create proxy:{} method:{} args:{}", proxy, method, args);
                         RpcRequest request = new RpcRequest();
                         request.setRequestId(UUID.randomUUID().toString());
                         request.setClassName(method.getDeclaringClass().getName());
@@ -62,7 +61,7 @@ public class RpcProxy {
                                 serverName += "-" + serverVersion;
                             }
                             serverAddress = discovery.discovery(serverName);
-                            log.info("InvocationHandler.invoke serverName:{} , address", serverName, serverAddress);
+                            log.info("InvocationHandler.invoke serverName:{} , address:{}", serverName, serverAddress);
                         }
                         if (serverAddress == null || serverAddress.length() == 0) {
                             log.warn("RpcProxy.create  zookeeper中找不到该类服务 serverName:{}",serverName);
@@ -71,10 +70,13 @@ public class RpcProxy {
                         String[] hostAndPort = serverAddress.split(":");
                         String host = hostAndPort[0];
                         String port = hostAndPort[1];
-                        RpcClient client = new RpcClient(host,Integer.valueOf(port));
+                        RpcClient client = new RpcClient(host, Integer.valueOf(port));
+                        log.debug("host:{} port:{}", host, port);
                         //统计RPC请求时间
                         long startTime = System.currentTimeMillis();
+                        log.debug("RPC start ....");
                         RpcResponse response = client.send(request);
+                        log.debug("RPC end ....");
                         long endTime = System.currentTimeMillis();
                         log.info("RpcProxy.create  use time:{}", endTime - startTime);
                         if (response == null || response.getException() != null) {

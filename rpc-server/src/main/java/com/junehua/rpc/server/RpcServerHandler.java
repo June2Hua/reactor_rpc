@@ -31,6 +31,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest request) throws Exception {
+        log.debug("RpcServerHandler.channelRead0 channelHandlerContext:{} request:{}", channelHandlerContext, request);
         this.request = request;
         RpcResponse response = new RpcResponse();
         try {
@@ -41,6 +42,7 @@ public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
             log.warn("RpcServerHandler.channelRead0 requestId:{}", request.getRequestId());
             response.setException(exception);
         }
+        log.debug("RpcServerHandler.channelRead0 response:{}", response);
         channelHandlerContext.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
